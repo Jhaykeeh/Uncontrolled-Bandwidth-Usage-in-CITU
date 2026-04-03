@@ -1,13 +1,15 @@
 import { useState } from 'react'
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [schoolId, setSchoolId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
   const handleLogin = (e) => {
     e.preventDefault()
-    alert(`Logging in with School ID: ${schoolId}`)
+    if (schoolId.trim() && password.trim()) {
+      onLogin()
+    }
   }
 
   const inputStyle = {
