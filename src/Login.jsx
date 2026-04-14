@@ -1,16 +1,24 @@
 import { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Login({ onLogin }) {
   const [schoolId, setSchoolId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
+  
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-    if (schoolId.trim() && password.trim()) {
-      onLogin()
-    }
+ const handleLogin = (e) => {
+  e.preventDefault();
+
+  if (schoolId.trim() && password.trim()) {
+
+    onLogin();          
+    navigate("/home");  
+
   }
+};
+  
 
   const inputStyle = {
     width: '100%',
@@ -34,6 +42,7 @@ export default function Login({ onLogin }) {
       background: '#FFFFFF',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     }}>
+
       {/* Header */}
       <header style={{
         background: '#5a1010',
@@ -58,6 +67,7 @@ export default function Login({ onLogin }) {
           }}>
             Cebu Institute of Technology
           </div>
+
           <div style={{
             color: '#e8c878',
             fontSize: '10px',
@@ -69,6 +79,7 @@ export default function Login({ onLogin }) {
             University
           </div>
         </div>
+
       </header>
 
       {/* Main */}
@@ -79,6 +90,7 @@ export default function Login({ onLogin }) {
         justifyContent: 'center',
         padding: '40px 20px',
       }}>
+
         {/* Login Card */}
         <div style={{
           background: '#fff',
@@ -89,6 +101,7 @@ export default function Login({ onLogin }) {
           overflow: 'hidden',
           border: '1px solid #d4a843',
         }}>
+
           {/* Card Header */}
           <div style={{
             background: '#5a1010',
@@ -109,10 +122,13 @@ export default function Login({ onLogin }) {
 
           {/* Card Body */}
           <form onSubmit={handleLogin} style={{ padding: '24px' }}>
+
             {/* School ID */}
             <div style={{ marginBottom: '14px' }}>
               <input
                 type="text"
+                name="school ID"
+                autoComplete="username"
                 placeholder="Enter School ID"
                 value={schoolId}
                 onChange={e => setSchoolId(e.target.value)}
@@ -132,6 +148,8 @@ export default function Login({ onLogin }) {
             <div style={{ marginBottom: '10px', position: 'relative' }}>
               <input
                 type={showPassword ? 'text' : 'password'}
+                name="password"
+                autoComplete="current-password"
                 placeholder="Enter Password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
@@ -145,19 +163,25 @@ export default function Login({ onLogin }) {
                   e.target.style.boxShadow = 'none'
                 }}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
-                  position: 'absolute', right: '10px', top: '50%',
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
                   transform: 'translateY(-50%)',
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  color: '#999', fontSize: '14px', padding: '2px 4px',
-                  lineHeight: 1,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#999',
+                  fontSize: '14px',
                 }}
               >
                 {showPassword ? '🙈' : '👁️'}
               </button>
+
             </div>
 
             {/* Forgot Password */}
@@ -167,11 +191,10 @@ export default function Login({ onLogin }) {
                 color: '#7a1818',
                 textDecoration: 'none',
                 fontStyle: 'italic',
-              }}
-              onMouseEnter={e => e.target.style.textDecoration = 'underline'}
-              onMouseLeave={e => e.target.style.textDecoration = 'none'}
-              >
+              }}>
+                <Link to="/forgot-password" style={{ fontSize: '12px', color: '#7a1818', textDecoration: 'none', fontStyle: 'italic' }}>
                 Forgot password?
+              </Link>
               </a>
             </div>
 
@@ -190,25 +213,12 @@ export default function Login({ onLogin }) {
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase',
                 cursor: 'pointer',
-                transition: 'all 0.2s',
-                fontFamily: 'inherit',
-                boxShadow: '0 3px 8px rgba(0,0,0,0.2)',
-              }}
-              onMouseEnter={e => {
-                e.target.style.background = 'linear-gradient(135deg, #d4a843, #e8c878)'
-                e.target.style.color = '#5a1010'
-                e.target.style.borderColor = '#7a1818'
-              }}
-              onMouseLeave={e => {
-                e.target.style.background = 'linear-gradient(135deg, #7a1818, #9b2020)'
-                e.target.style.color = '#d4a843'
-                e.target.style.borderColor = '#d4a843'
               }}
             >
               Log in
             </button>
 
-            {/* Sign Up */}
+            {/* Sign Up Redirect */}
             <p style={{
               textAlign: 'center',
               marginTop: '18px',
@@ -218,20 +228,26 @@ export default function Login({ onLogin }) {
               fontFamily: 'monospace',
             }}>
               Don't have an account?{' '}
-              <a href="#" style={{
-                color: '#7a1818',
-                fontWeight: '700',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={e => e.target.style.textDecoration = 'underline'}
-              onMouseLeave={e => e.target.style.textDecoration = 'none'}
+
+              <Link
+                to="/signup"
+                style={{
+                  color: '#7a1818',
+                  fontWeight: '700',
+                  textDecoration: 'none',
+                }}
               >
                 Sign Up
-              </a>
+              </Link>
+
             </p>
+
           </form>
+
         </div>
+
       </main>
+
     </div>
   )
 }
